@@ -1,163 +1,848 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Küçükler Tarım - Premium Ceviz ve Organik Ürünler</title>
-    <meta name="description" content="Küçükler Tarım - Organik ceviz, zeytinyağı ve doğal ürünler. WhatsApp üzerinden sipariş verin.">
-    <meta name="keywords" content="organik ceviz, zeytin, zeytinyağı, doğal ürünler, Küçükler Tarım">
-    
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif}
-        body{background:#f4f4f4;color:#333}
-        header{background:#4c6c3a;color:#fff;padding:1rem;text-align:center}
-        nav ul{display:flex;justify-content:center;list-style:none;margin-top:10px}
-        nav ul li{margin:0 15px}
-        nav ul li a{color:#fff;text-decoration:none}
-        .hero{background:url('https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/a1/f3/62/photo0jpg.jpg?w=1400');background-size:cover;background-position:center;color:#fff;padding:80px 20px;text-align:center}
-        .hero h1{color:#f8d56b;margin-bottom:10px}
-        .btn{display:inline-block;background:#25D366;color:#fff;padding:10px 20px;border-radius:30px;text-decoration:none;font-weight:bold;margin-top:10px;transition:0.2s ease}
-        .btn:hover{background:#1eb954}
-        .products{max-width:1200px;margin:auto;padding:40px 20px}
-        .products h2{text-align:center;margin-bottom:30px}
-        .product-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
-        .product-card{background:#fff;border-radius:8px;box-shadow:0 5px 10px rgba(0,0,0,.1);overflow:hidden;display:flex;flex-direction:column;justify-content:space-between}
-        .product-card img{width:100%;height:200px;object-fit:cover}
-        .product-info{padding:15px;text-align:center}
-        .product-info h3{margin-bottom:8px;font-size:1.1rem}
-        .product-info p{color:#4c6c3a;font-weight:bold;font-size:1.1rem;margin-bottom:10px}
-        footer{background:#4c6c3a;color:#fff;text-align:center;padding:20px}
-        .whatsapp-float{position:fixed;right:20px;bottom:20px;background:#25D366;color:#fff;width:60px;height:60px;border-radius:50%;text-align:center;font-size:30px;line-height:60px;text-decoration:none;box-shadow:0 4px 10px rgba(0,0,0,0.3);z-index:999}
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Küçükler Tarım - Premium Ceviz ve Doğal Köy Ürünleri</title>
+  <meta name="description" content="Küçükler Tarım - Börez Köyü, Gördes/Manisa'dan organik ceviz, zeytinyağı, keçi peyniri ve ince kabuk badem. WhatsApp üzerinden hızlı ve kolay sipariş verin.">
+
+  <!-- Google Fonts: Figtree & Fraunces -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Figtree', 'system-ui', 'sans-serif'],
+            display: ['Fraunces', 'Georgia', 'serif'],
+          },
+          colors: {
+            primary: {
+              DEFAULT: '#2c4e33', /* Küçükler Tarım zeytin & ceviz yeşili */
+              foreground: '#f7f6ed',
+            },
+            secondary: {
+              DEFAULT: '#e9e6d4',
+              foreground: '#233827',
+            },
+            earth: '#875127',
+            accent: '#447a46',
+            whatsapp: {
+              DEFAULT: '#25D366',
+              foreground: '#ffffff',
+            },
+            card: '#ffffff',
+            background: '#faf8f2',
+            border: '#e3ded0',
+            muted: {
+              DEFAULT: '#f0ece0',
+              foreground: '#6d6855'
+            }
+          },
+          boxShadow: {
+            soft: '0 14px 34px -14px rgba(44, 78, 51, 0.22)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #faf8f2;
+      color: #27382c;
+      font-family: 'Figtree', sans-serif;
+    }
+    h1, h2, h3, h4 {
+      font-family: 'Fraunces', Georgia, serif;
+      letter-spacing: -0.015em;
+    }
+    .hero-overlay {
+      background: linear-gradient(90deg, rgba(23, 43, 28, 0.90) 0%, rgba(31, 57, 37, 0.62) 60%, rgba(20, 39, 25, 0.35) 100%);
+    }
+    #toast {
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+      transform: translateY(-120%);
+      opacity: 0;
+    }
+    #toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .badge-pulse {
+      animation: pulse-dot 2s infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: .5; }
+    }
+  </style>
 </head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-accent selection:text-white">
 
-<body>
+  <!-- Üst Bilgi Barı -->
+  <div class="bg-primary py-1.5 px-4 text-center text-xs md:text-sm font-medium text-primary-foreground tracking-wide flex items-center justify-center gap-3">
+    <span>📍 Börez Köyü, Gördes / Manisa</span>
+    <span class="hidden sm:inline opacity-60">•</span>
+    <span class="hidden sm:inline">🌱 Doğal, Katkısız ve Taze Mahsul</span>
+    <span class="opacity-60">•</span>
+    <a href="https://wa.me/905539728540" target="_blank" class="underline hover:text-secondary font-semibold">Sipariş Hattı: 0553 972 85 40</a>
+  </div>
 
-<header>
-    <h1>Küçükler Tarım</h1>
-    <nav>
-        <ul>
-            <li><a href="#urunler">Ürünler</a></li>
-            <li><a href="#iletisim">İletişim</a></li>
-        </ul>
-    </nav>
-</header>
-
-<section class="hero">
-    <h1>Doğal ve Organik Ürünler</h1>
-    <p>WhatsApp üzerinden kolay sipariş</p>
-</section>
-
-<section class="products" id="urunler">
-    <h2>Ürünlerimiz</h2>
-    <div class="product-grid">
-
-        <!-- Kabuklu Ceviz (Yalova 1) -->
-        <div class="product-card">
-            <img src="https://cdn.myikas.com/images/0adec273-1398-4680-898c-5ee67d16804d/b3ea74a8-d6b7-429e-89da-a9812e7c77b1/1512/whatsapp-image-2024-04-06-at-23.webp" alt="Kabuklu Ceviz Yalova 1">
-            <div class="product-info">
-                <h3>Kabuklu Ceviz (Yerli Yalova 1)</h3>
-                <p>₺300 / kg</p>
-                <a class="btn" target="_blank"
-                   href="https://wa.me/905539728540?text=Merhaba%2C%20Kabuklu%20Ceviz%20(Yerli%20Yalova%201)%20sipari%C5%9Fi%20vermek%20istiyorum.">
-                    WhatsApp’tan Sipariş Ver
-                </a>
-            </div>
+  <!-- Header / Navigasyon -->
+  <header class="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur-md shadow-xs">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+      <!-- Logo & Başlık -->
+      <a href="#anasayfa" class="flex items-center gap-3 group">
+        <div class="w-11 h-11 rounded-2xl bg-primary flex items-center justify-center text-primary-foreground shadow-sm group-hover:scale-105 transition-transform">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2a9 9 0 0 0-9 9c0 4.97 4.03 9 9 9s9-4.03 9-9a9 9 0 0 0-9-9z"/>
+            <path d="M12 7v10M8 12c1.5 0 2.5-1 2.5-2.5S9.5 7 8 7M16 12c-1.5 0-2.5 1-2.5 2.5s1 2.5 2.5 2.5"/>
+          </svg>
         </div>
-
-        <!-- Kabuklu Ceviz (Şebin) -->
-        <div class="product-card">
-            <img src="https://tuncbotanik.com/uploads/p/p/sebin-ceviz-fidani-3-yas-tuplu-ve-asili_1.jpg" alt="Kabuklu Ceviz Yerli Şebin">
-            <div class="product-info">
-                <h3>Kabuklu Ceviz (Yerli Şebin)</h3>
-                <p>₺250 / kg</p>
-                <a class="btn" target="_blank"
-                   href="https://wa.me/905539728540?text=Merhaba%2C%20Kabuklu%20Ceviz%20(Yerli%20%C5%9Eebin)%20sipari%C5%9Fi%20vermek%20istiyorum.">
-                    WhatsApp’tan Sipariş Ver
-                </a>
-            </div>
+        <div>
+          <span class="font-display text-2xl font-bold tracking-tight text-primary block leading-none">Küçükler Tarım</span>
+          <span class="text-[11px] text-muted-foreground font-semibold uppercase tracking-wider block mt-0.5">Ceviz & Organik Ürünler</span>
         </div>
+      </a>
 
-        <!-- Kabuklu Ceviz (Chandler) -->
-        <div class="product-card">
-            <img src="https://cdn.myikas.com/images/c4c9dd56-a667-4775-9686-f75c55c09016/ee2d1a05-c740-4eae-997d-e8f190f5bd72/1512/ceviz-urun-gorseli-kare.webp" alt="Kabuklu Ceviz Chandler">
-            <div class="product-info">
-                <h3>Kabuklu Ceviz (Chandler)</h3>
-                <p>₺300 / kg</p>
-                <a class="btn" target="_blank"
-                   href="https://wa.me/905539728540?text=Merhaba%2C%20Kabuklu%20Ceviz%20(Chandler)%20sipari%C5%9Fi%20vermek%20istiyorum.">
-                    WhatsApp’tan Sipariş Ver
-                </a>
-            </div>
-        </div>
-
-        <!-- İç Ceviz -->
-        <div class="product-card">
-            <img src="https://cdn.dsmcdn.com/ty698/product/media/images/20230121/13/262645773/729210809/1/1_org_zoom.jpg" alt="İç Ceviz">
-            <div class="product-info">
-                <h3>İç Ceviz</h3>
-                <p>₺500 / kg</p>
-                <a class="btn" target="_blank"
-                   href="https://wa.me/905539728540?text=Merhaba%2C%20%C4%B0%C3%A7%20Ceviz%20sipari%C5%9Fi%20vermek%20istiyorum.">
-                    WhatsApp’tan Sipariş Ver
-                </a>
-            </div>
-        </div>
-
-        <!-- Zeytinyağı -->
-        <div class="product-card">
-            <img src="https://fikirturu.com/storage/2024/09/IMG_9570-1024x788.jpeg" alt="Zeytinyağı">
-            <div class="product-info">
-                <h3>Zeytinyağı</h3>
-                <p>₺250 / litre</p>
-                <a class="btn" target="_blank"
-                   href="https://wa.me/905539728540?text=Merhaba%2C%20Zeytinya%C4%9F%C4%B1%20sipari%C5%9Fi%20vermek%20istiyorum.">
-                    WhatsApp’tan Sipariş Ver
-                </a>
-            </div>
-        </div>
-
-        <!-- Keçi Peyniri -->
-        <div class="product-card">
-            <img src="https://www.yoreselbakkal.com.tr/idea/jl/78/myassets/products/474/seferihisar-diyet-keci-yoruk.jpg" alt="Keçi Peyniri">
-            <div class="product-info">
-                <h3>Keçi Peyniri</h3>
-                <p>₺500 / kg</p>
-                <a class="btn" target="_blank"
-                   href="https://wa.me/905539728540?text=Merhaba%2C%20Ke%C3%A7i%20Peyniri%20sipari%C5%9Fi%20vermek%20istiyorum.">
-                    WhatsApp’tan Sipariş Ver
-                </a>
-            </div>
-        </div>
-
-        <!-- İnce Kabuk Badem -->
-        <div class="product-card">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmELhZjg6_x4gzxHOlREumc8ykP-rOf9O5hZAe1P_WuA&s=10" alt="İnce Kabuk Badem">
-            <div class="product-info">
-                <h3>İnce Kabuk Badem</h3>
-                <p>₺500 / kg</p>
-                <a class="btn" target="_blank"
-                   href="https://wa.me/905539728540?text=Merhaba%2C%20%C4%B0nce%20Kabuk%20Badem%20sipari%C5%9Fi%20vermek%20istiyorum.">
-                    WhatsApp’tan Sipariş Ver
-                </a>
-            </div>
-        </div>
+      <!-- Masaüstü Navigasyon -->
+      <nav class="hidden md:flex items-center gap-7">
+        <a href="#anasayfa" class="text-sm font-semibold text-foreground/85 hover:text-primary transition">Ana Sayfa</a>
+        <a href="#urunler" class="text-sm font-semibold text-foreground/85 hover:text-primary transition">Ürünlerimiz</a>
+        <a href="#hakkimizda" class="text-sm font-semibold text-foreground/85 hover:text-primary transition">Hakkımızda</a>
+        <a href="#sss" class="text-sm font-semibold text-foreground/85 hover:text-primary transition">SSS</a>
+        <a href="#iletisim" class="text-sm font-semibold text-foreground/85 hover:text-primary transition">İletişim</a>
         
+        <!-- Sepet Butonu -->
+        <button onclick="toggleCartModal(true)" class="relative inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-soft hover:bg-primary/90 transition active:scale-95">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+          </svg>
+          <span>Sepetim</span>
+          <span id="cart-badge-count" class="grid min-w-[20px] h-5 place-items-center rounded-full bg-secondary text-primary font-bold text-xs px-1.5 ml-1">0</span>
+        </button>
+      </nav>
+
+      <!-- Mobil Menü Butonları -->
+      <div class="flex items-center gap-2 md:hidden">
+        <button onclick="toggleCartModal(true)" class="relative p-2 text-primary" aria-label="Sepeti Gör">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+          </svg>
+          <span id="cart-badge-count-mobile" class="absolute top-0 right-0 grid min-w-[18px] h-[18px] place-items-center rounded-full bg-earth text-white font-bold text-[10px] px-1">0</span>
+        </button>
+        <button onclick="toggleMobileMenu()" class="p-2 text-primary" aria-label="Menü">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
+          </svg>
+        </button>
+      </div>
     </div>
-</section>
 
-<section id="iletisim" style="padding:40px;text-align:center">
-    <h2>İletişim</h2>
-    <p>Börez Köyü, Gördes / Manisa</p>
-    <p>📞 0553 972 85 40</p>
-</section>
+    <!-- Mobil Açılır Menü -->
+    <div id="mobile-menu" class="hidden border-t border-border bg-background px-4 py-3 space-y-2 md:hidden">
+      <a href="#anasayfa" onclick="toggleMobileMenu()" class="block py-2 text-sm font-semibold border-b border-border/50">Ana Sayfa</a>
+      <a href="#urunler" onclick="toggleMobileMenu()" class="block py-2 text-sm font-semibold border-b border-border/50">Ürünlerimiz & Fiyatlar</a>
+      <a href="#hakkimizda" onclick="toggleMobileMenu()" class="block py-2 text-sm font-semibold border-b border-border/50">Hakkımızda</a>
+      <a href="#sss" onclick="toggleMobileMenu()" class="block py-2 text-sm font-semibold border-b border-border/50">Sıkça Sorulan Sorular</a>
+      <a href="#iletisim" onclick="toggleMobileMenu()" class="block py-2 text-sm font-semibold">İletişim</a>
+    </div>
+  </header>
 
-<footer>
-    <p>© 2024 Küçükler Tarım</p>
-</footer>
+  <!-- Hero Section -->
+  <section id="anasayfa" class="relative isolate overflow-hidden">
+    <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/a1/f3/62/photo0jpg.jpg?w=1400" alt="Küçükler Tarım " class="absolute inset-0 -z-10 h-full w-full object-cover">
+    <div class="hero-overlay absolute inset-0 -z-10"></div>
+    
+    <div class="mx-auto flex min-h-[75vh] max-w-6xl flex-col justify-center px-4 py-20 text-primary-foreground">
+      <div class="inline-flex items-center gap-2 rounded-full bg-white/15 backdrop-blur-md px-3.5 py-1 text-xs font-semibold text-secondary w-fit mb-4">
+        <span class="w-2 h-2 rounded-full bg-whatsapp badge-pulse"></span> Gördes / Börez Köyü Doğal Hasat
+      </div>
+      <h1 class="text-4xl sm:text-5xl md:text-7xl font-bold leading-[1.08] text-white max-w-3xl">
+        Doğal ve Organik Köy Ürünleri
+      </h1>
+      <p class="mt-5 max-w-xl text-base sm:text-lg text-primary-foreground/90 font-normal leading-relaxed">
+        Küçükler Tarım olarak bahçelerimizden özenle topladığımız yerli ve Chandler cevizleri, soğuk sıkım doğal sızma zeytinyağını, köy keçi peynirini ve ince kabuk bademi sofralarınıza ulaştırıyoruz.
+      </p>
+      <div class="mt-8 flex flex-col sm:flex-row gap-3">
+        <a href="#urunler" class="inline-flex items-center justify-center rounded-full bg-white text-primary px-7 py-3 text-base font-semibold shadow-soft hover:bg-secondary transition active:scale-95">
+          Ürünleri İncele
+        </a>
+        <a href="https://wa.me/905539728540?text=Merhaba,%20K%C3%BC%C3%A7%C3%BCkler%20Tar%C4%B1m%20%C3%BCr%C3%BCnleri%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 rounded-full bg-whatsapp text-whatsapp-foreground px-7 py-3 text-base font-semibold shadow-soft hover:bg-whatsapp/90 transition active:scale-95">
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+            <path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35M12.05 21.8h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37A9.86 9.86 0 0 1 2.16 12C2.16 6.55 6.6 2.12 12.06 2.12c2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 0 1 2.89 6.99c0 5.45-4.44 9.89-9.89 9.89m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.9 0-3.17-1.24-6.16-3.48-8.4"/>
+          </svg>
+          WhatsApp Hızlı İletişim
+        </a>
+      </div>
+    </div>
+  </section>
 
-<!-- Sabit WhatsApp Butonu -->
-<a href="https://wa.me/905539728540?text=Merhaba%2C%20bilgi%20almak%20istiyorum." class="whatsapp-float" target="_blank" title="WhatsApp Destek">💬</a>
+  <!-- Neden Küçükler Tarım (Özellikler) -->
+  <section class="relative z-10 mx-auto -mt-10 grid max-w-6xl gap-4 px-4 sm:grid-cols-2 lg:grid-cols-4 w-full">
+    <div class="rounded-2xl border border-border bg-card p-5 shadow-soft transition hover:-translate-y-1">
+      <span class="text-3xl">🌰</span>
+      <h3 class="mt-3 text-lg font-bold text-primary">Yerli & Taze Ceviz</h3>
+      <p class="text-sm text-muted-foreground mt-1">Yalova 1, Şebin ve Chandler cevizleri.</p>
+    </div>
+    <div class="rounded-2xl border border-border bg-card p-5 shadow-soft transition hover:-translate-y-1">
+      <span class="text-3xl">🫒</span>
+      <h3 class="mt-3 text-lg font-bold text-primary">Doğal Zeytinyağı</h3>
+      <p class="text-sm text-muted-foreground mt-1">Gördes Börez Köyü zeytinlerinden katkısız zeytinyağı.</p>
+    </div>
+    <div class="rounded-2xl border border-border bg-card p-5 shadow-soft transition hover:-translate-y-1">
+      <span class="text-3xl">🧀</span>
+      <h3 class="mt-3 text-lg font-bold text-primary">Doğal Keçi Peyniri</h3>
+      <p class="text-sm text-muted-foreground mt-1">Geleneksel yöntemlerle mayalanan saf keçi sütü peyniri.</p>
+    </div>
+    <div class="rounded-2xl border border-border bg-card p-5 shadow-soft transition hover:-translate-y-1">
+      <span class="text-3xl">📦</span>
+      <h3 class="mt-3 text-lg font-bold text-primary">Güvenli Gönderim</h3>
+      <p class="text-sm text-muted-foreground mt-1">Özenli paketleme, yerel teslimat ve kargo seçeneği.</p>
+    </div>
+  </section>
 
+  <!-- Ürünlerimiz Kataloğu -->
+  <section id="urunler" class="mx-auto max-w-6xl scroll-mt-24 px-4 py-20 w-full">
+    <div class="mb-12 text-center">
+      <span class="text-xs font-bold uppercase tracking-widest text-earth">Bereketli Hasat</span>
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mt-1">Ürünlerimiz & Güncel Fiyatlar</h2>
+      <p class="mt-2 text-muted-foreground max-w-xl mx-auto">İster doğrudan sepetinize ekleyerek toplu sipariş oluşturun, isterseniz tek tıkla ürün bazında WhatsApp'tan sipariş verin.</p>
+    </div>
+
+    <!-- Ürün Kartları Izgarası (Dinamik render edilir) -->
+    <div id="products-grid" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
+  </section>
+
+  <!-- Hakkımızda Bölümü -->
+  <section id="hakkimizda" class="bg-secondary/60 border-y border-border py-20">
+    <div class="mx-auto grid max-w-6xl items-center gap-10 px-4 md:grid-cols-2">
+      <div class="overflow-hidden rounded-3xl shadow-soft">
+        <img src="c:\Users\Ben\AppData\Local\Packages\5319275A.WhatsAppDesktop_cv1g1gvanyjgm\LocalState\sessions\CDC34E255AEDF4E07011E2D844153B4EDBC46B75\transfers\2026-44\WhatsApp Image 2026-10-28 at 18.18.36.jpeg" alt="Küçükler Tarım Bahçeleri Gördes" class="h-full w-full object-cover transition duration-500 hover:scale-105" loading="lazy">
+      </div>
+      <div>
+        <span class="text-xs uppercase tracking-widest text-earth font-bold">Küçükler Tarım Hikâyesi</span>
+        <h2 class="mt-1 text-3xl sm:text-4xl font-bold text-primary leading-tight">Toprağın Bereketini Sofranıza Taşıyoruz</h2>
+        <p class="mt-4 text-muted-foreground leading-relaxed">
+          Manisa Gördes’e bağlı <strong>Börez Köyü</strong>'nde doğanın ve toprağın sunduğu en temiz nimetleri yetiştiriyoruz. Ceviz bahçelerimizden çıkan yerli Yalova 1, Şebin ve Chandler kabuklu cevizlerimiz, iç cevizlerimiz ve ince kabuk bademlerimiz tazeliğini kaybetmeden sofranıza gelir.
+        </p>
+        <p class="mt-3 text-muted-foreground leading-relaxed">
+          Kendi zeytinliklerimizden elde ettiğimiz saf zeytinyağımız ve geleneksel keçi peynirimizle sofralarınıza köy mutfağının güvenilir samimiyetini sunuyoruz. Aracı olmadan, doğrudan üreticiden tüketiciye ulaştırıyoruz.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <div class="p-3 bg-card rounded-2xl border border-border text-center flex-1 min-w-[100px]">
+            <span class="block font-display text-2xl font-bold text-earth">Börez</span>
+            <span class="text-xs text-muted-foreground">Köyü Üretimi</span>
+          </div>
+          <div class="p-3 bg-card rounded-2xl border border-border text-center flex-1 min-w-[100px]">
+            <span class="block font-display text-2xl font-bold text-earth">%100</span>
+            <span class="text-xs text-muted-foreground">Doğal & Katkısız</span>
+          </div>
+          <div class="p-3 bg-card rounded-2xl border border-border text-center flex-1 min-w-[100px]">
+            <span class="block font-display text-2xl font-bold text-earth">Direkt</span>
+            <span class="text-xs text-muted-foreground">Üreticiden Sipariş</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sıkça Sorulan Sorular (Accordion) -->
+  <section id="sss" class="mx-auto max-w-3xl px-4 py-20 w-full scroll-mt-24">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl md:text-4xl font-bold text-primary">Sıkça Sorulan Sorular</h2>
+      <p class="mt-2 text-muted-foreground text-sm">Sipariş süreci, ceviz çeşitlerimiz, kargo ve ödeme detayları.</p>
+    </div>
+
+    <div class="space-y-3" id="faq-container"></div>
+  </section>
+
+  <!-- İletişim & Lokasyon Bölümü -->
+  <section id="iletisim" class="mx-auto max-w-5xl px-4 py-16 text-center border-t border-border">
+    <div class="inline-flex p-3 rounded-full bg-secondary/80 text-earth mb-3">
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+    </div>
+    <h2 class="text-3xl md:text-4xl font-bold text-primary">Bizimle İletişime Geçin</h2>
+    <p class="mx-auto mt-2 max-w-xl text-muted-foreground text-sm">
+      Ürünlerimiz hakkında merak ettikleriniz, toptan alım talepleriniz veya güncel siparişleriniz için bize her zaman ulaşabilirsiniz.
+    </p>
+
+    <div class="mt-8 grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto text-left">
+      <div class="p-5 rounded-2xl bg-card border border-border shadow-sm flex items-start gap-4">
+        <div class="p-3 rounded-xl bg-primary/10 text-primary">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        </div>
+        <div>
+          <h4 class="font-bold text-primary">Adres & Üretim Yeri</h4>
+          <p class="text-sm text-muted-foreground mt-1">Börez Köyü, Gördes / Manisa</p>
+        </div>
+      </div>
+
+      <div class="p-5 rounded-2xl bg-card border border-border shadow-sm flex items-start gap-4">
+        <div class="p-3 rounded-xl bg-whatsapp/10 text-whatsapp">
+          <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35M12.05 21.8h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37A9.86 9.86 0 0 1 2.16 12C2.16 6.55 6.6 2.12 12.06 2.12c2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 0 1 2.89 6.99c0 5.45-4.44 9.89-9.89 9.89m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.9 0-3.17-1.24-6.16-3.48-8.4"/></svg>
+        </div>
+        <div>
+          <h4 class="font-bold text-primary">Telefon & WhatsApp</h4>
+          <a href="tel:05539728540" class="text-sm font-semibold text-foreground hover:underline block mt-1">0553 972 85 40</a>
+          <span class="text-xs text-muted-foreground">Haftanın her günü mesaj gönderebilirsiniz.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8 flex justify-center">
+      <a href="https://wa.me/905539728540?text=Merhaba%2C%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full bg-whatsapp px-8 py-3.5 text-base font-bold text-white shadow-soft hover:bg-whatsapp/90 transition active:scale-95">
+        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35M12.05 21.8h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37A9.86 9.86 0 0 1 2.16 12C2.16 6.55 6.6 2.12 12.06 2.12c2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 0 1 2.89 6.99c0 5.45-4.44 9.89-9.89 9.89m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.9 0-3.17-1.24-6.16-3.48-8.4"/></svg>
+        WhatsApp Sohbeti Başlat
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-primary text-primary-foreground mt-auto">
+    <div class="mx-auto grid max-w-6xl gap-10 px-4 py-14 md:grid-cols-3">
+      <div>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-white text-primary grid place-items-center font-bold font-display text-lg">KT</div>
+          <span class="font-display text-2xl font-bold">Küçükler Tarım</span>
+        </div>
+        <p class="mt-3 font-display italic text-secondary text-sm opacity-90">Börez Köyü'nden Sofranıza Doğal Lezzetler</p>
+        <p class="mt-2 text-xs opacity-80 leading-relaxed">
+          Gördes / Manisa'da yetiştirilen kaliteli kabuklu ceviz, sızma zeytinyağı ve yöresel tatlar.
+        </p>
+        <div class="mt-4 flex gap-2">
+          <a href="https://wa.me/905539728540?text=Merhaba%2C%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="rounded-full border border-primary-foreground/30 p-2 transition hover:bg-primary-foreground/15">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35M12.05 21.8h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37A9.86 9.86 0 0 1 2.16 12C2.16 6.55 6.6 2.12 12.06 2.12c2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 0 1 2.89 6.99c0 5.45-4.44 9.89-9.89 9.89m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.9 0-3.17-1.24-6.16-3.48-8.4"/></svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <h3 class="mb-3 text-lg font-semibold font-display">Hızlı Menü</h3>
+        <ul class="space-y-2 text-sm text-primary-foreground/85">
+          <li><a href="#anasayfa" class="hover:underline">Ana Sayfa</a></li>
+          <li><a href="#urunler" class="hover:underline">Ürünlerimiz & Fiyatlar</a></li>
+          <li><a href="#hakkimizda" class="hover:underline">Hakkımızda</a></li>
+          <li><a href="#sss" class="hover:underline">Sıkça Sorulan Sorular</a></li>
+          <li><a href="#iletisim" class="hover:underline">İletişim</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="mb-3 text-lg font-semibold font-display">Hızlı Sipariş Hattı</h3>
+        <p class="text-sm text-primary-foreground/80 mb-3">
+          Sepetinizi oluşturun ve tek tuşla sipariş mesajınızı WhatsApp ile doğrudan bize iletin.
+        </p>
+        <a href="https://wa.me/905539728540?text=Merhaba,%20K%C3%BC%C3%A7%C3%BCkler%20Tar%C4%B1m'dan%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full bg-whatsapp px-5 py-2.5 text-xs font-semibold text-whatsapp-foreground shadow hover:bg-whatsapp/90 transition">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35M12.05 21.8h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37A9.86 9.86 0 0 1 2.16 12C2.16 6.55 6.6 2.12 12.06 2.12c2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 0 1 2.89 6.99c0 5.45-4.44 9.89-9.89 9.89m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.9 0-3.17-1.24-6.16-3.48-8.4"/></svg>
+          0553 972 85 40 (WhatsApp)
+        </a>
+      </div>
+    </div>
+    <div class="border-t border-primary-foreground/15 py-4 text-center text-xs opacity-75">
+      © <span id="year"></span> Küçükler Tarım. Tüm hakları saklıdır.
+    </div>
+  </footer>
+
+  <!-- Sabit WhatsApp Yüzen Butonu -->
+  <a href="https://wa.me/905539728540?text=Merhaba%2C%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener noreferrer" class="fixed right-5 bottom-5 z-40 flex items-center justify-center w-14 h-14 rounded-full bg-whatsapp text-white shadow-xl hover:scale-110 transition active:scale-95" title="WhatsApp Destek">
+    <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35M12.05 21.8h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37A9.86 9.86 0 0 1 2.16 12C2.16 6.55 6.6 2.12 12.06 2.12c2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 0 1 2.89 6.99c0 5.45-4.44 9.89-9.89 9.89m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.9 0-3.17-1.24-6.16-3.48-8.4"/></svg>
+  </a>
+
+  <!-- Sepet & Sipariş Formu Modalı -->
+  <div id="cart-modal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm overflow-y-auto">
+    <div class="flex min-h-full items-center justify-center p-4">
+      <div class="relative w-full max-w-2xl rounded-2xl border border-border bg-card p-6 shadow-2xl transition-all my-8">
+        <!-- Modal Başlık -->
+        <div class="flex items-center justify-between pb-4 border-b border-border">
+          <div class="flex items-center gap-2">
+            <span class="text-2xl">🛒</span>
+            <h2 class="text-2xl font-bold text-primary">Sepetim ve WhatsApp Siparişi</h2>
+          </div>
+          <button onclick="toggleCartModal(false)" class="p-2 text-muted-foreground hover:text-foreground rounded-full hover:bg-muted transition" aria-label="Kapat">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+
+        <!-- Modal Gövdesi -->
+        <div id="cart-modal-body" class="mt-4"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Bildirimi -->
+  <div id="toast" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-5 py-3 shadow-lg text-sm font-medium pointer-events-none">
+    <svg class="w-5 h-5 text-whatsapp" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+    <span id="toast-message">Ürün sepete eklendi</span>
+  </div>
+
+  <!-- JavaScript Kodları -->
+  <script>
+    // --- 1. Küçükler Tarım Güncel Ürün Kataloğu ---
+    const PRODUCTS = [
+      {
+        id: "yalova1",
+        name: "Kabuklu Ceviz (Yerli Yalova 1)",
+        description: "Gördes Börez Köyü üretimi, ince kabuklu, taze ve dolgun yerli Yalova 1 cevizi.",
+        price: 300,
+        unitLabel: "1 kg",
+        unitAmount: 1,
+        unitMeasure: "kg",
+        image: "https://cdn.myikas.com/images/0adec273-1398-4680-898c-5ee67d16804d/b3ea74a8-d6b7-429e-89da-a9812e7c77b1/1512/whatsapp-image-2024-04-06-at-23.webp",
+        messageName: "Kabuklu Ceviz (Yerli Yalova 1)"
+      },
+      {
+        id: "sebin",
+        name: "Kabuklu Ceviz (Yerli Şebin)",
+        description: "Geleneksel lezzet, yerli Şebin çeşidi, verimli ve aromatik kabuklu ceviz.",
+        price: 250,
+        unitLabel: "1 kg",
+        unitAmount: 1,
+        unitMeasure: "kg",
+        image: "https://tuncbotanik.com/uploads/p/p/sebin-ceviz-fidani-3-yas-tuplu-ve-asili_1.jpg",
+        messageName: "Kabuklu Ceviz (Yerli Şebin)"
+      },
+      {
+        id: "chandler",
+        name: "Kabuklu Ceviz (Chandler)",
+        description: "Yüksek iç randımanlı, açık beyaz renkli birinci kalite taze Chandler cevizi.",
+        price: 300,
+        unitLabel: "1 kg",
+        unitAmount: 1,
+        unitMeasure: "kg",
+        image: "https://cdn.myikas.com/images/c4c9dd56-a667-4775-9686-f75c55c09016/ee2d1a05-c740-4eae-997d-e8f190f5bd72/1512/ceviz-urun-gorseli-kare.webp",
+        messageName: "Kabuklu Ceviz (Chandler)"
+      },
+      {
+        id: "ic_ceviz",
+        name: "İç Ceviz",
+        description: "Taze kırılmış, kelebek ve yarım parça seçme doğal lezzetli birinci kalite iç ceviz.",
+        price: 500,
+        unitLabel: "1 kg",
+        unitAmount: 1,
+        unitMeasure: "kg",
+        image: "https://cdn.dsmcdn.com/ty698/product/media/images/20230121/13/262645773/729210809/1/1_org_zoom.jpg",
+        messageName: "İç Ceviz"
+      },
+      {
+        id: "zeytinyagi",
+        name: "Zeytinyağı",
+        description: "Soğuk sıkım, asit oranı düşük, Börez Köyü zeytinlerinden katkısız sızma zeytinyağı.",
+        price: 250,
+        unitLabel: "1 litre",
+        unitAmount: 1,
+        unitMeasure: "litre",
+        image: "https://fikirturu.com/storage/2024/09/IMG_9570-1024x788.jpeg",
+        messageName: "Zeytinyağı"
+      },
+      {
+        id: "keci_peyniri",
+        name: "Keçi Peyniri",
+        description: "Doğal keçi sütünden geleneksel yöntemlerle mayalanmış nefis köy keçi peyniri.",
+        price: 500,
+        unitLabel: "1 kg",
+        unitAmount: 1,
+        unitMeasure: "kg",
+        image: "https://www.yoreselbakkal.com.tr/idea/jl/78/myassets/products/474/seferihisar-diyet-keci-yoruk.jpg",
+        messageName: "Keçi Peyniri"
+      },
+      {
+        id: "badem",
+        name: "İnce Kabuk Badem",
+        description: "Kolay kırılan dişkıran ince kabuk, içi dolgun taze ve lezzetli köy bademi.",
+        price: 500,
+        unitLabel: "1 kg",
+        unitAmount: 1,
+        unitMeasure: "kg",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmELhZjg6_x4gzxHOlREumc8ykP-rOf9O5hZAe1P_WuA&s=10",
+        messageName: "İnce Kabuk Badem"
+      }
+    ];
+
+    const FAQ_DATA = [
+      ["Cevizler nereden geliyor?", "Tüm cevizlerimiz Manisa Gördes'e bağlı Börez Köyü'ndeki kendi bahçelerimizden toplanarak doğrudan tüketiciye ulaştırılmaktadır."],
+      ["Hangi ceviz çeşidini tercih etmeliyim?", "İnce kabuk ve kolay kırılan yerli Yalova 1 ile açık renkli ve iri iç randımanına sahip Chandler en çok tercih edilen çeşitlerimizdendir. Şebin ise klasik aromasıyla öne çıkar."],
+      ["Nasıl sipariş verebilirim?", "Sayfamız üzerinden ürünleri sepete ekleyip 'WhatsApp ile Siparişi Gönder' butonuna basarak veya doğrudan her ürün kartındaki WhatsApp butonuna tıklayarak siparişinizi iletebilirsiniz."],
+      ["Kargo ve gönderim nasıl yapılıyor?", "Tüm Türkiye'ye anlaşmalı kargo firmalarıyla güvenli ve korunaklı kolilerde gönderim sağlanmaktadır. Yakın bölgelere ise yerel teslimat imkanımız bulunmaktadır."],
+      ["Ödeme koşulları nedir?", "Siparişinizi WhatsApp'tan ilettikten sonra IBAN / Havale veya kapıda ödeme detayları teyit edilmektedir."]
+    ];
+
+    const WA_NUMBER = "905539728540"; // Küçükler Tarım İletişim Numarası
+    const CART_STORAGE_KEY = "kucukler-tarim-sepet";
+
+    // --- 2. State & Yardımcı Fonksiyonlar ---
+    let cart = {}; // { [id]: qty }
+    let cardQuantities = {}; // Ürün kartlarındaki miktar seçiciler
+    let selectedMethod = "Kargo ile Gönderim";
+
+    function formatTL(num) {
+      return num.toLocaleString('tr-TR') + ' ₺';
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const text = document.getElementById('toast-message');
+      text.innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2400);
+    }
+
+    function loadCart() {
+      try {
+        const raw = localStorage.getItem(CART_STORAGE_KEY);
+        if (raw) cart = JSON.parse(raw);
+      } catch (e) {
+        cart = {};
+      }
+      updateCartBadge();
+    }
+
+    function saveCart() {
+      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+      updateCartBadge();
+    }
+
+    function updateCartBadge() {
+      const totalCount = Object.values(cart).reduce((sum, q) => sum + q, 0);
+      document.getElementById('cart-badge-count').innerText = totalCount;
+      document.getElementById('cart-badge-count-mobile').innerText = totalCount;
+    }
+
+    function addToCart(id, qty = 1) {
+      cart[id] = (cart[id] || 0) + qty;
+      saveCart();
+      const p = PRODUCTS.find(item => item.id === id);
+      showToast(`${p.name} (${qty} ${p.unitLabel}) sepete eklendi`);
+    }
+
+    function updateCartItemQty(id, qty) {
+      if (qty <= 0) {
+        delete cart[id];
+      } else {
+        cart[id] = Math.min(qty, 999);
+      }
+      saveCart();
+      renderCartModal();
+    }
+
+    function clearCart() {
+      cart = {};
+      saveCart();
+      renderCartModal();
+    }
+
+    // --- 3. WhatsApp Mesaj Linki Oluşturucu ---
+    function buildSingleProductWaLink(productId, qty) {
+      const p = PRODUCTS.find(item => item.id === productId);
+      const total = p.price * qty;
+      const totalAmountStr = `${p.unitAmount * qty} ${p.unitMeasure}`;
+      const message = `Merhaba, Küçükler Tarım'dan ${p.messageName} siparişi vermek istiyorum. Birim fiyat: ${p.price} TL / ${p.unitLabel}. Sipariş miktarı: ${qty} adet (${totalAmountStr}). Toplam tutar: ${total} TL. Siparişim hakkında bilgi alabilir miyim?`;
+      return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
+    }
+
+    // --- 4. Render Fonksiyonları ---
+    function renderProducts() {
+      const grid = document.getElementById('products-grid');
+      grid.innerHTML = PRODUCTS.map(p => {
+        if (!cardQuantities[p.id]) cardQuantities[p.id] = 1;
+        const currentQty = cardQuantities[p.id];
+        const lineTotal = p.price * currentQty;
+        const totalAmt = `${p.unitAmount * currentQty} ${p.unitMeasure}`;
+
+        return `
+          <article class="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+            <div class="aspect-[4/3] overflow-hidden bg-muted relative">
+              <img src="${p.image}" alt="${p.name}" loading="lazy" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" onerror="this.src='https://placehold.co/600x450/4c6c3a/ffffff?text=${encodeURIComponent(p.name)}'" />
+              <div class="absolute top-3 left-3 bg-primary/90 backdrop-blur-xs text-white text-xs px-2.5 py-1 rounded-full font-medium">
+                Doğal Mahsul
+              </div>
+            </div>
+            <div class="flex flex-1 flex-col p-5">
+              <h3 class="text-xl font-bold text-primary">${p.name}</h3>
+              <p class="mt-1 flex-1 text-sm text-muted-foreground leading-relaxed">${p.description}</p>
+              
+              <div class="mt-4 flex items-baseline gap-2">
+                <span class="font-display text-3xl font-bold text-earth">${formatTL(p.price)}</span>
+                <span class="text-sm font-medium text-muted-foreground">/ ${p.unitLabel}</span>
+              </div>
+
+              <!-- Miktar Seçici -->
+              <div class="mt-4 flex items-center justify-between gap-3 pt-3 border-t border-border/60">
+                <div class="inline-flex items-center rounded-full border border-border bg-background shadow-xs">
+                  <button type="button" onclick="changeCardQty('${p.id}', -1)" aria-label="Miktar Azalt" class="p-2 text-primary hover:text-accent transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/></svg>
+                  </button>
+                  <input type="text" readonly value="${currentQty}" id="card-qty-${p.id}" class="w-8 bg-transparent text-center font-bold text-sm outline-none" />
+                  <button type="button" onclick="changeCardQty('${p.id}', 1)" aria-label="Miktar Artır" class="p-2 text-primary hover:text-accent transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                  </button>
+                </div>
+                <div class="text-right text-xs text-muted-foreground">
+                  <span id="card-amt-${p.id}">${totalAmt}</span><br />
+                  <span id="card-total-${p.id}" class="text-sm font-bold text-foreground">${formatTL(lineTotal)}</span>
+                </div>
+              </div>
+
+              <!-- Sepete Ekle ve WhatsApp Butonları -->
+              <div class="mt-4 space-y-2">
+                <button type="button" onclick="addToCart('${p.id}', cardQuantities['${p.id}'])" class="w-full rounded-full bg-primary py-2.5 px-4 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition shadow-xs active:scale-95">
+                  Sepete Ekle
+                </button>
+                <a id="card-wa-btn-${p.id}" href="${buildSingleProductWaLink(p.id, currentQty)}" target="_blank" rel="noopener noreferrer" class="inline-flex w-full items-center justify-center gap-2 rounded-full bg-whatsapp py-2.5 px-4 text-sm font-semibold text-whatsapp-foreground hover:bg-whatsapp/90 transition shadow-xs active:scale-95">
+                  <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35M12.05 21.8h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37A9.86 9.86 0 0 1 2.16 12C2.16 6.55 6.6 2.12 12.06 2.12c2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 0 1 2.89 6.99c0 5.45-4.44 9.89-9.89 9.89m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.9 0-3.17-1.24-6.16-3.48-8.4"/></svg>
+                  WhatsApp'tan Sipariş Ver
+                </a>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function changeCardQty(id, delta) {
+      const current = cardQuantities[id] || 1;
+      const next = Math.max(1, Math.min(999, current + delta));
+      cardQuantities[id] = next;
+
+      const p = PRODUCTS.find(item => item.id === id);
+      document.getElementById(`card-qty-${id}`).value = next;
+      document.getElementById(`card-amt-${id}`).innerText = `${p.unitAmount * next} ${p.unitMeasure}`;
+      document.getElementById(`card-total-${id}`).innerText = formatTL(p.price * next);
+      document.getElementById(`card-wa-btn-${id}`).href = buildSingleProductWaLink(id, next);
+    }
+
+    function renderFaq() {
+      const container = document.getElementById('faq-container');
+      container.innerHTML = FAQ_DATA.map(([q, a], idx) => `
+        <div class="rounded-2xl border border-border bg-card overflow-hidden shadow-xs">
+          <button onclick="toggleFaq(${idx})" class="w-full flex items-center justify-between p-4 sm:p-5 text-left font-display text-base sm:text-lg font-bold text-primary hover:text-accent transition">
+            <span>${q}</span>
+            <svg id="faq-icon-${idx}" class="w-5 h-5 text-muted-foreground transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div id="faq-ans-${idx}" class="hidden px-4 sm:px-5 pb-5 text-sm sm:text-base text-muted-foreground border-t border-border/40 pt-3 leading-relaxed">
+            ${a}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleFaq(index) {
+      const ans = document.getElementById(`faq-ans-${index}`);
+      const icon = document.getElementById(`faq-icon-${index}`);
+      const isHidden = ans.classList.contains('hidden');
+      ans.classList.toggle('hidden', !isHidden);
+      icon.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+    }
+
+    // --- 5. Sepet ve Sipariş Modal Mantığı ---
+    function toggleCartModal(open) {
+      const modal = document.getElementById('cart-modal');
+      if (open) {
+        renderCartModal();
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      } else {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+    }
+
+    function selectMethod(m) {
+      selectedMethod = m;
+      renderCartModal();
+    }
+
+    function renderCartModal() {
+      const body = document.getElementById('cart-modal-body');
+      const lines = Object.entries(cart)
+        .map(([id, qty]) => {
+          const product = PRODUCTS.find(p => p.id === id);
+          return product ? { product, qty } : null;
+        })
+        .filter(Boolean);
+
+      if (lines.length === 0) {
+        body.innerHTML = `
+          <div class="py-12 text-center">
+            <span class="text-5xl">🛒</span>
+            <p class="mt-4 text-lg text-muted-foreground">Sepetiniz şu anda boş.</p>
+            <button onclick="toggleCartModal(false)" class="mt-6 inline-flex rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition shadow-soft">
+              Ürünleri İncele
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      const totalSum = lines.reduce((sum, l) => sum + (l.product.price * l.qty), 0);
+
+      body.innerHTML = `
+        <div class="space-y-6">
+          <!-- Sepetteki Ürünler -->
+          <div class="space-y-3 max-h-60 overflow-y-auto pr-1">
+            ${lines.map(({ product: p, qty }) => `
+              <div class="flex items-center justify-between gap-3 p-3 rounded-xl border border-border bg-background">
+                <div class="flex items-center gap-3">
+                  <img src="${p.image}" alt="${p.name}" class="w-14 h-14 rounded-lg object-cover" onerror="this.src='https://placehold.co/100x100/4c6c3a/ffffff?text=Urun'">
+                  <div>
+                    <h4 class="font-bold text-primary text-sm">${p.name}</h4>
+                    <p class="text-xs text-muted-foreground">${formatTL(p.price)} / ${p.unitLabel}</p>
+                    <p class="text-xs font-semibold text-foreground">${p.unitAmount * qty} ${p.unitMeasure}</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <div class="inline-flex items-center rounded-full border border-border bg-white shadow-xs">
+                    <button type="button" onclick="updateCartItemQty('${p.id}', ${qty - 1})" class="p-1 px-2 text-primary font-bold hover:text-accent">-</button>
+                    <span class="w-6 text-center text-xs font-bold">${qty}</span>
+                    <button type="button" onclick="updateCartItemQty('${p.id}', ${qty + 1})" class="p-1 px-2 text-primary font-bold hover:text-accent">+</button>
+                  </div>
+                  <span class="w-16 text-right font-bold text-sm text-earth">${formatTL(p.price * qty)}</span>
+                  <button type="button" onclick="updateCartItemQty('${p.id}', 0)" aria-label="Sil" class="text-red-500 hover:text-red-700 p-1">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                  </button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+
+          <!-- Ara Toplam -->
+          <div class="rounded-xl bg-secondary/80 p-4 flex items-center justify-between">
+            <span class="font-display text-lg font-semibold text-primary">Ürünler Toplamı</span>
+            <span class="font-display text-2xl font-bold text-earth">${formatTL(totalSum)}</span>
+          </div>
+          <p class="text-xs text-muted-foreground -mt-3">
+            * Kargo veya teslimat ücreti varsa toplama dahil değildir; sipariş onayı sırasında teyit edilecektir.
+          </p>
+
+          <!-- Sipariş Bilgileri Formu -->
+          <form id="order-form" onsubmit="handleOrderSubmit(event, ${totalSum})" class="space-y-3.5 border-t border-border pt-4">
+            <h3 class="text-lg font-bold text-primary">Teslimat & İletişim Bilgileri</h3>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-semibold text-foreground mb-1">Ad Soyad *</label>
+                <input required id="ord-name" type="text" placeholder="Adınız ve Soyadınız" class="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm focus:border-primary outline-none" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-foreground mb-1">Telefon Numarası *</label>
+                <input required id="ord-phone" type="tel" placeholder="05XX XXX XX XX" class="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm focus:border-primary outline-none" />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-foreground mb-1">Teslimat Yöntemi *</label>
+              <div class="grid grid-cols-2 gap-2">
+                <button type="button" onclick="selectMethod('Kargo ile Gönderim')" class="py-2.5 px-3 rounded-lg text-xs font-bold transition border ${selectedMethod === 'Kargo ile Gönderim' ? 'border-primary bg-primary text-primary-foreground' : 'border-border bg-background text-foreground hover:border-primary'}">
+                  Kargo ile Gönderim
+                </button>
+                <button type="button" onclick="selectMethod('Yerel Teslimat')" class="py-2.5 px-3 rounded-lg text-xs font-bold transition border ${selectedMethod === 'Yerel Teslimat' ? 'border-primary bg-primary text-primary-foreground' : 'border-border bg-background text-foreground hover:border-primary'}">
+                  Yerel Teslimat (Gördes/Manisa)
+                </button>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-semibold text-foreground mb-1">İl *</label>
+                <input required id="ord-il" type="text" placeholder="Örn: Manisa" class="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm focus:border-primary outline-none" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-foreground mb-1">İlçe *</label>
+                <input required id="ord-ilce" type="text" placeholder="Örn: Gördes" class="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm focus:border-primary outline-none" />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-foreground mb-1">Açık Adres *</label>
+              <textarea required id="ord-adres" rows="2" placeholder="Mahalle, Cadde, Sokak, Kapı No, Daire..." class="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm focus:border-primary outline-none resize-none"></textarea>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-foreground mb-1">Sipariş Notu</label>
+              <textarea id="ord-note" rows="1" placeholder="Varsa kargo veya teslimat notunuz..." class="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm focus:border-primary outline-none resize-none"></textarea>
+            </div>
+
+            <div id="form-error" class="hidden rounded-lg bg-red-100 p-2 text-xs text-red-700"></div>
+
+            <button type="submit" class="w-full flex items-center justify-center gap-2 rounded-full bg-whatsapp py-3 px-6 text-sm font-bold text-white shadow-md hover:bg-whatsapp/90 transition active:scale-95">
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35M12.05 21.8h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37A9.86 9.86 0 0 1 2.16 12C2.16 6.55 6.6 2.12 12.06 2.12c2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 0 1 2.89 6.99c0 5.45-4.44 9.89-9.89 9.89m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.9 0-3.17-1.24-6.16-3.48-8.4"/></svg>
+              WhatsApp ile Siparişi Gönder
+            </button>
+            <p class="text-[11px] text-center text-muted-foreground">
+              Butona bastığınızda hazırlanan sipariş listesi WhatsApp'ta otomatik olarak açılacaktır.
+            </p>
+          </form>
+        </div>
+      `;
+    }
+
+    function handleOrderSubmit(e, totalSum) {
+      e.preventDefault();
+      const name = document.getElementById('ord-name').value.trim();
+      const phone = document.getElementById('ord-phone').value.trim();
+      const il = document.getElementById('ord-il').value.trim();
+      const ilce = document.getElementById('ord-ilce').value.trim();
+      const adres = document.getElementById('ord-adres').value.trim();
+      const note = document.getElementById('ord-note').value.trim();
+      const errBox = document.getElementById('form-error');
+
+      if (!name || phone.replace(/\D/g, '').length < 10 || !il || !ilce || !adres) {
+        errBox.innerText = "Lütfen zorunlu alanları ve telefon numaranızı eksiksiz doldurun.";
+        errBox.classList.remove('hidden');
+        return;
+      }
+      errBox.classList.add('hidden');
+
+      const lines = Object.entries(cart)
+        .map(([id, qty]) => {
+          const p = PRODUCTS.find(item => item.id === id);
+          return p ? `- ${p.name}: ${qty} adet (${p.unitAmount * qty} ${p.unitMeasure}) — Birim Fiyat: ${p.price} TL — Ara Toplam: ${p.price * qty} TL` : null;
+        })
+        .filter(Boolean)
+        .join("\n");
+
+      const message = `Merhaba, Küçükler Tarım web sitesi üzerinden sipariş vermek istiyorum.
+
+SİPARİŞ DETAYLARI:
+${lines}
+
+Ürünler Toplamı: ${totalSum} TL
+Teslimat Yöntemi: ${selectedMethod}
+
+MÜŞTERİ BİLGİLERİ:
+Ad Soyad: ${name}
+Telefon: ${phone}
+Adres: ${adres}, ${ilce} / ${il}
+Sipariş Notu: ${note || "-"}
+
+Kargo / teslimat ve ödeme teyidi rica ederim.
+Teşekkürler.`;
+
+      const targetUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
+      window.open(targetUrl, '_blank');
+      toggleCartModal(false);
+      showToast("WhatsApp açılıyor! Siparişinizi gönderebilirsiniz.");
+    }
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    }
+
+    // --- 6. Sayfa Başlangıcı ---
+    window.onload = function() {
+      document.getElementById('year').innerText = new Date().getFullYear();
+      renderProducts();
+      renderFaq();
+      loadCart();
+    };
+  </script>
 </body>
 </html>
